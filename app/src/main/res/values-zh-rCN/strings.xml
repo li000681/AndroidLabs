@@ -3,4 +3,8 @@
     <string name="app_name">Android Labs</string>
     <string name="hello_message">世界你好！</string>
     <string name="ButtonText">我是按钮</string>
+    <string name="CheckBoxText">点我</string>
+    <string name="SwitchText">开关 开/关</string>
+    <string name="EditText">在此输入</string>
+    <string name="toast_message">更多信息</string>
 </resources>
