@@ -31,8 +31,8 @@ public class MainActivity extends AppCompatActivity {
         ImageButton ib= findViewById(R.id.imageButton);
         Switch sw = findViewById(R.id.switch1);
         sw.setOnCheckedChangeListener((cb,b)->{if(b)
-        {Snackbar.make(sw,"The switch is now on",Snackbar.LENGTH_LONG).setAction("Undo", click -> sw.setChecked(!b)).show();}else{
-            Snackbar.make(sw,"The switch is now off",Snackbar.LENGTH_LONG).setAction("Undo", click -> sw.setChecked(!b)).show();
+        {Snackbar.make(sw,getResources().getString(R.string.switch_on),Snackbar.LENGTH_LONG).setAction(getResources().getString(R.string.undo), click -> sw.setChecked(!b)).show();}else{
+            Snackbar.make(sw,getResources().getString(R.string.switch_off),Snackbar.LENGTH_LONG).setAction(getResources().getString(R.string.undo), click -> sw.setChecked(!b)).show();
         }});
 
 

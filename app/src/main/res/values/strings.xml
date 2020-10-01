@@ -6,4 +6,7 @@
     <string name="SwitchText">Switch on / off</string>
     <string name="EditText">Type here</string>
     <string name="toast_message">Here is more information</string>
+    <string name="switch_on">Switch is on</string>
+    <string name="switch_off">Switch is off</string>
+    <string name="undo">undo</string>
 </resources>
