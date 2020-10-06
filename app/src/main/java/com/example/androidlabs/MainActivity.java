@@ -2,9 +2,12 @@ package com.example.androidlabs;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -15,25 +18,39 @@ import com.google.android.material.snackbar.Snackbar;
 
 public class MainActivity extends AppCompatActivity {
 
+
+    SharedPreferences prefs = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         //setContentView(R.layout.activity_main_grid);
         //setContentView(R.layout.activity_main_relative);
-        TextView tx= findViewById(R.id.TextView);
+
+        EditText et1= findViewById(R.id.editTtext1);
         Button bt =findViewById(R.id.button);
-        bt.setOnClickListener( v -> Toast.makeText(MainActivity.this, getResources().getString(R.string.toast_message) , Toast.LENGTH_LONG).show());
 
+        @Override
+        protected void onPause() {
+            super.onPause();
+            prefs = getSharedPreferences("FileName", Context.MODE_PRIVATE);
 
-        CheckBox checkBox=findViewById(R.id.checkbox);
+            String savedString = prefs.getString("EmailAdress", "getResourse().getString");
+            EditText et= findViewById(R.id.editText);
+            et.setText(savedString);
 
-        ImageButton ib= findViewById(R.id.imageButton);
-        Switch sw = findViewById(R.id.switch1);
-        sw.setOnCheckedChangeListener((cb,b)->{if(b)
-        {Snackbar.make(sw,getResources().getString(R.string.switch_on),Snackbar.LENGTH_LONG).setAction(getResources().getString(R.string.undo), click -> sw.setChecked(!b)).show();}else{
-            Snackbar.make(sw,getResources().getString(R.string.switch_off),Snackbar.LENGTH_LONG).setAction(getResources().getString(R.string.undo), click -> sw.setChecked(!b)).show();
-        }});
+            Button saveButton = findViewById(R.id.saveButton);
+
+            saveButton.setOnClickListener(bt -> saveSharedPrefs(typeField.getText().toString()));
+        }
+
+        private void saveSharedPrefs(String stringToSave) {
+            SharedPreferences.Editor editor = prefs.edit();
+            editor.putString("EmailAdress", stringToSave);
+            editor.commit();
+        }
+        }
+
 
 
     }
