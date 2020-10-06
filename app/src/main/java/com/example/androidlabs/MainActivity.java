@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
     }
         @Override
         protected void onPause () {
-            super.onPause();
+
             prefs = getSharedPreferences("FileName", Context.MODE_PRIVATE);
 
             String savedString = prefs.getString("EmailAdress", getResources().getString(R.string.EditText));
@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
             });
 
 
-
+            super.onPause();
         }
 
     private void saveSharedPrefs(String stringToSave){
