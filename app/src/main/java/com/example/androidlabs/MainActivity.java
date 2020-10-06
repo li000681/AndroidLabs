@@ -25,6 +25,18 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         prefs = getSharedPreferences("FileName", Context.MODE_PRIVATE);
+        String savedString = prefs.getString("EmailAdress", "");
+        EditText et = findViewById(R.id.editText);
+        et.setText(savedString);
+        String savedString1 = prefs.getString("PassWord", "");
+        EditText et1 = findViewById(R.id.editTtext1);
+        et1.setText(savedString1);
+
+        Button logIn = findViewById(R.id.button);
+        logIn.setOnClickListener(bt -> {
+            saveSharedPrefs(et.getText().toString());
+            saveSharedPrefs1(et1.getText().toString());
+        });
 
 
 
@@ -35,18 +47,6 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         protected void onPause () {
-            String savedString = prefs.getString("EmailAdress", "");
-            EditText et = findViewById(R.id.editText);
-            et.setText(savedString);
-            String savedString1 = prefs.getString("PassWord", "");
-            EditText et1 = findViewById(R.id.editTtext1);
-            et1.setText(savedString1);
-
-            Button logIn = findViewById(R.id.button);
-            logIn.setOnClickListener(bt -> {
-                saveSharedPrefs(et.getText().toString());
-                saveSharedPrefs1(et1.getText().toString());
-            });
 
 
             super.onPause();
