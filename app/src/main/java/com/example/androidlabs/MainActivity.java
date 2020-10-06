@@ -24,34 +24,40 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        //setContentView(R.layout.activity_main_grid);
-        //setContentView(R.layout.activity_main_relative);
-
-        EditText et1= findViewById(R.id.editTtext1);
-        Button bt =findViewById(R.id.button);
-
+    }
         @Override
-        protected void onPause() {
+        protected void onPause () {
             super.onPause();
             prefs = getSharedPreferences("FileName", Context.MODE_PRIVATE);
 
-            String savedString = prefs.getString("EmailAdress", "getResourse().getString");
-            EditText et= findViewById(R.id.editText);
+            String savedString = prefs.getString("EmailAdress", getResources().getString(R.string.EditText));
+            EditText et = findViewById(R.id.editText);
             et.setText(savedString);
+            String savedString1 = prefs.getString("PassWord", getResources().getString(R.string.EditText1));
+            EditText et1 = findViewById(R.id.editTtext1);
+            et1.setText(savedString1);
 
-            Button saveButton = findViewById(R.id.saveButton);
+            Button logIn = findViewById(R.id.button);
 
-            saveButton.setOnClickListener(bt -> saveSharedPrefs(typeField.getText().toString()));
+            logIn.setOnClickListener(bt -> {
+                saveSharedPrefs(et.getText().toString());
+                saveSharedPrefs1(et1.getText().toString());
+            });
+
+
+
         }
 
-        private void saveSharedPrefs(String stringToSave) {
-            SharedPreferences.Editor editor = prefs.edit();
-            editor.putString("EmailAdress", stringToSave);
-            editor.commit();
-        }
-        }
-
-
-
+    private void saveSharedPrefs(String stringToSave){
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString("EmailAdress", stringToSave);
+        editor.commit();
     }
+    private void saveSharedPrefs1 (String stringToSave){
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString("PassWord", stringToSave);
+        editor.commit();
+    }
+
 }
+
