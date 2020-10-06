@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="app_name">安卓实验室</string>
     <string name="textView">输入电子邮箱：</string>
     <string name="textView1">输入密码：</string>
     <string name="yourProfile">你的信息 </string>
