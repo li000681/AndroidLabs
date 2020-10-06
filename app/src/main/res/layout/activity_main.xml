@@ -27,7 +27,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/textView1"
-        android:textSize="30dp" />
+         />
     <EditText
         android:id="@+id/editTtext1"
         android:layout_width="match_parent"

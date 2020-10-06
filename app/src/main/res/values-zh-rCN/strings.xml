@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">安卓实验室</string>
-    <string name="textView">输入邮箱地址</string>
-    <string name="ButtonText">我是按钮</string>
-    <string name="CheckBoxText">点我</string>
-    <string name="SwitchText">开关 开/关</string>
-    <string name="EditText">在此输入</string>
-    <string name="toast_message">更多信息</string>
-    <string name="switch_on">开关已开</string>
-    <string name="switch_off">开关已关</string>
-    <string name="undo">取消</string>
+    <string name="textView">输入电子邮箱：</string>
+    <string name="textView1">输入密码：</string>
+    <string name="yourProfile">你的信息 </string>
+    <string name="yourName">你的名字: </string>
+    <string name="yourEmail">你的电子邮箱: </string>
+    <string name="EditText">在此输入电子邮箱</string>
+    <string name="name">输入你的名字</string>
+    <string name="yourPicture">你的照片: </string>
+    <string name="EditText1"></string>
+    <string name="email">输入你的电子邮箱</string>
+    <string name="ButtonText">登录</string>
+    <string name="takePicture">点此按钮照相</string>
 </resources>

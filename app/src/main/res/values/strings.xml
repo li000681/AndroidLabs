@@ -2,14 +2,15 @@
     <string name="app_name">Android Labs</string>
 
     <string name="textView">Enter your email address: </string>
-    <string name="EditText">Type email here</string>
     <string name="textView1">Type your password: </string>
+    <string name="yourProfile">Your profile </string>
+    <string name="yourName">Your name: </string>
+    <string name="yourEmail">Your email: </string>
+    <string name="EditText">Type email here</string>
+    <string name="name">Enter your name</string>
+    <string name="yourPicture">Your picture: </string>
     <string name="EditText1"></string>
-    <string name="ButtonText">Log in</string>
-    <string name="SwitchText">Switch on / off</string>
-
-    <string name="toast_message">Here is more information</string>
-    <string name="switch_on">Switch is on</string>
-    <string name="switch_off">Switch is off</string>
-    <string name="undo">undo</string>
+    <string name="email">Enter your email</string>
+    <string name="ButtonText">Login</string>
+    <string name="takePicture">Click the button above to take a picture</string>
 </resources>
