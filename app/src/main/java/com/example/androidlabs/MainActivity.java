@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
 
         });
 
-        Log.e(ACTIVITY_NAME, "In function:" /*onCreate*/);
+        Log.e(ACTIVITY_NAME, "In function: onCreate");
 
 
 
@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
 
 
             super.onPause();
-            Log.e(ACTIVITY_NAME, "In function:" /*onPause*/);
+            Log.e(ACTIVITY_NAME, "In function: onPause");
         }
 
     private void saveSharedPrefs(String stringToSave){

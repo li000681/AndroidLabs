@@ -34,7 +34,7 @@ public class ProfileActivity extends AppCompatActivity {
         //fromMain.getStringExtra("EMAIL");
         email.setText( fromMain.getStringExtra("EMAIL"));
 
-        Log.e(ACTIVITY_NAME, "In function:" /*onCreate*/);
+        Log.e(ACTIVITY_NAME, "In function: onCreate");
     }
         @Override
         protected void onActivityResult ( int requestCode, int resultCode, Intent data){
@@ -43,20 +43,20 @@ public class ProfileActivity extends AppCompatActivity {
                 Bundle extras = data.getExtras();
                 Bitmap imageBitmap = (Bitmap) extras.get("data");
                 mImageButton.setImageBitmap(imageBitmap);
-                Log.e(ACTIVITY_NAME, "In function:" /*onActivityResult */);
+                Log.e(ACTIVITY_NAME, "In function: onActivityResult" );
             }
         }
 
     @Override
     protected void onResume() {
         super.onResume();
-        Log.e(ACTIVITY_NAME, "In function:" /*onResume */);
+        Log.e(ACTIVITY_NAME, "In function: onResume");
     }
 
 
     @Override
     protected void onStart() {
         super.onStart();
-        Log.e(ACTIVITY_NAME, "In function:" /*onStart*/);
+        Log.e(ACTIVITY_NAME, "In function: onStart");
     }
 }
