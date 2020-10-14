@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -19,6 +20,7 @@ public class ChatRoomActivity extends AppCompatActivity {
     private MyListAdapter myAdapter;
     private Button sendButton;
     private Button receiveButton;
+    private EditText et;
     public boolean sendButtonIsClicked(){
         return true;
     }
@@ -48,16 +50,18 @@ public class ChatRoomActivity extends AppCompatActivity {
 
             if (sendButtonIsClicked()) {
                 View newView = inflater.inflate(R.layout.row_layout_send, parent, false);
-                TextView tView = newView.findViewById(R.id.textGoesHere);
-                tView.setText(getItem(position).toString());
+                TextView tView = newView.findViewById(R.id.sendText);
+                tView.setText(et.getText().toString());
+                et.setText("");
                 return newView;
 
             }
 
-            if (sendButtonIsClicked()) {
+            if (receiveButtonIsClicked()) {
                 View newView = inflater.inflate(R.layout.row_layout_receive, parent, false);
-                TextView tView = newView.findViewById(R.id.textGoesHere);
-                tView.setText(getItem(position).toString());
+                TextView tView = newView.findViewById(R.id.receiveText);
+                tView.setText(et.getText().toString());
+                et.setText("");
                 return newView;
             }
             return null;
@@ -79,7 +83,19 @@ public class ChatRoomActivity extends AppCompatActivity {
 
         chatList.setAdapter(  myAdapter = new MyListAdapter() );
         sendButton = (Button) findViewById(R.id.sendButton);
-        receiveButton = (Button) findViewById(R.id.receiveButton);
+        sendButton.setOnClickListener(click->{
+            elements.add(et.getText().toString());
+            myAdapter.notifyDataSetChanged();
+            sendButtonIsClicked();
 
+        });
+        receiveButton = (Button) findViewById(R.id.receiveButton);
+        receiveButton.setOnClickListener(click->{
+            elements.add(et.getText().toString());
+            myAdapter.notifyDataSetChanged();
+            receiveButtonIsClicked();
+
+        });
+        et=(EditText)findViewById(R.id.typeText);
     }
 }

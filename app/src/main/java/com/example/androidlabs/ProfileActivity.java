@@ -31,14 +31,14 @@ public class ProfileActivity extends AppCompatActivity {
 
 
         mImageButton.setOnClickListener(click -> dispatchTakePictureIntent());
+
+        Intent fromMain = getIntent();
+        //fromMain.getStringExtra("EMAIL");
+        email.setText( fromMain.getStringExtra("EMAIL"));
         chatButton=findViewById(R.id.chatButton);
         Intent chatPage =new Intent( ProfileActivity.this, ChatRoomActivity.class);
 
         chatButton.setOnClickListener(click->startActivity(chatPage));
-        Intent fromMain = getIntent();
-        //fromMain.getStringExtra("EMAIL");
-        email.setText( fromMain.getStringExtra("EMAIL"));
-
 
         Log.e(ACTIVITY_NAME, "In function: onCreate");
     }
@@ -64,5 +64,10 @@ public class ProfileActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         Log.e(ACTIVITY_NAME, "In function: onStart");
+    }
+    @Override
+    protected  void onPause(){
+        super.onPause();
+
     }
 }
