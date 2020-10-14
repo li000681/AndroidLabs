@@ -13,4 +13,8 @@
     <string name="email">Enter your email</string>
     <string name="ButtonText">Login</string>
     <string name="takePicture">Click the button above to take a picture</string>
+    <string name="chatButton">Go to chat</string>
+    <string name="sendButton">Send</string>
+    <string name="receiveButton">Receive</string>
+    <string name="typeText">Type here</string>
 </resources>

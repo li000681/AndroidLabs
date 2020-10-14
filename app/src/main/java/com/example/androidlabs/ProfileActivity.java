@@ -15,6 +15,7 @@ public class ProfileActivity extends AppCompatActivity {
     public static final String ACTIVITY_NAME = "PROFILE_ACTIVITY";
     static final int REQUEST_IMAGE_CAPTURE = 1;
     private ImageButton mImageButton;
+    private Button chatButton;
     private void dispatchTakePictureIntent() {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
@@ -30,9 +31,14 @@ public class ProfileActivity extends AppCompatActivity {
 
 
         mImageButton.setOnClickListener(click -> dispatchTakePictureIntent());
+        chatButton=findViewById(R.id.chatButton);
+        Intent chatPage =new Intent( ProfileActivity.this, ChatRoomActivity.class);
+
+        chatButton.setOnClickListener(click->startActivity(chatPage));
         Intent fromMain = getIntent();
         //fromMain.getStringExtra("EMAIL");
         email.setText( fromMain.getStringExtra("EMAIL"));
+
 
         Log.e(ACTIVITY_NAME, "In function: onCreate");
     }

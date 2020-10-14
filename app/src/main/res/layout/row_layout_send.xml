@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<GridLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:columnCount="2"
+    android:rowCount="1">
+    <ImageView
+        android:id="@+id/senderImage"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_columnWeight="1"
+        android:layout_gravity="left"
+        android:src="@drawable/row_send"/>
+    <TextView
+        android:id="@+id/sendText"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_columnWeight="6"
+        android:layout_gravity="left"/>
+
+
+
+
+</GridLayout>

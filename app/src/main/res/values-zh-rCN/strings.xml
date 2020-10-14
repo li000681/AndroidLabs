@@ -13,4 +13,8 @@
     <string name="email">输入你的电子邮箱</string>
     <string name="ButtonText">登录</string>
     <string name="takePicture">点此按钮照相</string>
+    <string name="chatButton">去聊天</string>
+    <string name="sendButton">发送</string>
+    <string name="receiveButton">接收</string>
+    <string name="typeText">在此输入</string>
 </resources>
