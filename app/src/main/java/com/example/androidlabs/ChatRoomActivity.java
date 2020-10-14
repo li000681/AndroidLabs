@@ -52,7 +52,7 @@ public class ChatRoomActivity extends AppCompatActivity {
                 newView= inflater.inflate(R.layout.row_layout_send, parent, false);
                 TextView tView = newView.findViewById(R.id.sendText);
                 tView.setText(et.getText().toString());
-                et.setText("");
+
                 return newView;
 
             }
@@ -60,7 +60,7 @@ public class ChatRoomActivity extends AppCompatActivity {
             if (receiveButtonIsClicked()) {
                 newView = inflater.inflate(R.layout.row_layout_receive, parent, false);
                 TextView tView = newView.findViewById(R.id.receiveText);
-                tView.setText(et.getText().toString());
+                tView.setText( getItem(position).toString() );
                 et.setText("");
                 return newView;
             }
@@ -85,6 +85,7 @@ public class ChatRoomActivity extends AppCompatActivity {
         sendButton = (Button) findViewById(R.id.sendButton);
         sendButton.setOnClickListener(click->{
             elements.add(et.getText().toString());
+            et.setText("");
             myAdapter.notifyDataSetChanged();
             sendButtonIsClicked();
 

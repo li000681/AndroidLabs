@@ -65,9 +65,9 @@ public class ProfileActivity extends AppCompatActivity {
         super.onStart();
         Log.e(ACTIVITY_NAME, "In function: onStart");
     }
-    @Override
-    protected  void onPause(){
-        super.onPause();
+    //@Override
+   // protected  void onPause(){
+    //    super.onPause();
 
-    }
+   // }
 }
