@@ -46,10 +46,10 @@ public class ChatRoomActivity extends AppCompatActivity {
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
             LayoutInflater inflater = getLayoutInflater();
-
+            View newView;
 
             if (sendButtonIsClicked()) {
-                View newView = inflater.inflate(R.layout.row_layout_send, parent, false);
+                newView= inflater.inflate(R.layout.row_layout_send, parent, false);
                 TextView tView = newView.findViewById(R.id.sendText);
                 tView.setText(et.getText().toString());
                 et.setText("");
@@ -58,7 +58,7 @@ public class ChatRoomActivity extends AppCompatActivity {
             }
 
             if (receiveButtonIsClicked()) {
-                View newView = inflater.inflate(R.layout.row_layout_receive, parent, false);
+                newView = inflater.inflate(R.layout.row_layout_receive, parent, false);
                 TextView tView = newView.findViewById(R.id.receiveText);
                 tView.setText(et.getText().toString());
                 et.setText("");
