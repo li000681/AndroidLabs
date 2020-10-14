@@ -46,24 +46,28 @@ public class ChatRoomActivity extends AppCompatActivity {
             LayoutInflater inflater = getLayoutInflater();
 
 
-            if (sendButtonIsClicked()){
-                View newView = inflater.inflate(R.layout.row_layout_send, parent, false);
-
-            };
-            if (sendButtonIsClicked()){
-                View newView = inflater.inflate(R.layout.row_layout_receive, parent, false);
-
-            };
-
-
-
+            if (sendButtonIsClicked()) {
                 View newView = inflater.inflate(R.layout.row_layout_send, parent, false);
                 TextView tView = newView.findViewById(R.id.textGoesHere);
                 tView.setText(getItem(position).toString());
                 return newView;
-            });
-            return newView;
+
+            }
+
+            if (sendButtonIsClicked()) {
+                View newView = inflater.inflate(R.layout.row_layout_receive, parent, false);
+                TextView tView = newView.findViewById(R.id.textGoesHere);
+                tView.setText(getItem(position).toString());
+                return newView;
+            }
+            return null;
+
         }
+
+
+
+
+
     }
 
 
