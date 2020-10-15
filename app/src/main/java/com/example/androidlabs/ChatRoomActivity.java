@@ -106,16 +106,16 @@ public class ChatRoomActivity<sendButtonIsClicked> extends AppCompatActivity {
         chatList.setOnItemClickListener( (parent, view, pos, id) -> {
 
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setTitle("Do you want to delete this?")
-                    .setMessage("The selected row is: "+ elements.get(pos).getMsg()+". The database id: "+ pos )
+            builder.setTitle( getResources().getString(R.string.alertTitle))
+                    .setMessage( getResources().getString(R.string.alertMessage1)+ elements.get(pos).getMsg()+ getResources().getString(R.string.alertMessage2)+ pos )
                   //  .setView(newView) //add the 3 edit texts showing the contact information
 
-                    .setPositiveButton("Delete", (click, b) -> {
+                    .setPositiveButton( getResources().getString(R.string.alertPB), (click, b) -> {
 
                         elements.remove(pos);
                         myAdapter.notifyDataSetChanged();
                     })
-                    .setNegativeButton("dismiss", (click, b) -> { })
+                    .setNegativeButton( getResources().getString(R.string.alertNB), (click, b) -> { })
                     .create().show();
 
         }   );
