@@ -1,8 +1,10 @@
 package com.example.androidlabs;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,17 +17,30 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-public class ChatRoomActivity extends AppCompatActivity {
-    private ArrayList<String> elements = new ArrayList<>();
+public class ChatRoomActivity<sendButtonIsClicked> extends AppCompatActivity {
+    private ArrayList<Message> elements = new ArrayList<>();
     private MyListAdapter myAdapter;
     private Button sendButton;
     private Button receiveButton;
     private EditText et;
-    public boolean sendButtonIsClicked(){
-        return true;
-    }
-    public boolean receiveButtonIsClicked(){
-        return true;
+
+    private class Message{
+        private String msg;
+        private Boolean sendButtonIsClicked;
+        public Message(String msg, Boolean sendButtonIsClicked){
+            this.msg=msg;
+            this.sendButtonIsClicked=sendButtonIsClicked;
+        }
+        public boolean getSendButtonIsClicked(){
+            return sendButtonIsClicked;
+        }
+
+
+        public String getMsg() {
+            return msg;
+        }
+
+
     }
     private class MyListAdapter extends BaseAdapter {
         @Override
@@ -35,36 +50,41 @@ public class ChatRoomActivity extends AppCompatActivity {
 
         @Override
         public Object getItem(int position) {
-            return "This is row " + position;
+            return elements.get(position);
         }
 
         @Override
         public long getItemId(int position) {
             return (long)position;
         }
+        @Override
+        public int getViewTypeCount() {
+            return 2;
+        }
 
+        @Override
+        public int getItemViewType(int position) {
+            return position % 2;
+        }
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
             LayoutInflater inflater = getLayoutInflater();
             View newView;
 
-            if (sendButtonIsClicked()) {
+            if (elements.get(position).getSendButtonIsClicked()) {
                 newView= inflater.inflate(R.layout.row_layout_send, parent, false);
-                TextView tView = newView.findViewById(R.id.sendText);
-                tView.setText(et.getText().toString());
 
-                return newView;
 
-            }
 
-            if (receiveButtonIsClicked()) {
+            }else {
                 newView = inflater.inflate(R.layout.row_layout_receive, parent, false);
-                TextView tView = newView.findViewById(R.id.receiveText);
-                tView.setText( getItem(position).toString() );
-                et.setText("");
-                return newView;
+
             }
-            return null;
+
+            TextView tView = newView.findViewById(R.id.msg);
+            tView.setText( elements.get(position).getMsg());
+
+            return newView;
 
         }
 
@@ -79,24 +99,58 @@ public class ChatRoomActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat_room);
+        et=(EditText)findViewById(R.id.typeText);
         ListView chatList = (ListView) findViewById(R.id.chatList);
 
         chatList.setAdapter(  myAdapter = new MyListAdapter() );
+        chatList.setOnItemClickListener( (parent, view, pos, id) -> {
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle("Do you want to delete this?")
+                    .setMessage("The selected row is: "+ elements.get(pos).getMsg()+". The database id: "+ pos )
+                  //  .setView(newView) //add the 3 edit texts showing the contact information
+
+                    .setPositiveButton("Delete", (click, b) -> {
+
+                        elements.remove(pos);
+                        myAdapter.notifyDataSetChanged();
+                    })
+                    .setNegativeButton("dismiss", (click, b) -> { })
+                    .create().show();
+
+        }   );
         sendButton = (Button) findViewById(R.id.sendButton);
         sendButton.setOnClickListener(click->{
-            elements.add(et.getText().toString());
+
+            Message message= new Message(et.getText().toString(),true);
+            elements.add(message);
             et.setText("");
             myAdapter.notifyDataSetChanged();
-            sendButtonIsClicked();
+
 
         });
         receiveButton = (Button) findViewById(R.id.receiveButton);
         receiveButton.setOnClickListener(click->{
-            elements.add(et.getText().toString());
+
+            Message message= new Message(et.getText().toString(),false);
+            elements.add(message);
             myAdapter.notifyDataSetChanged();
-            receiveButtonIsClicked();
+
+            et.setText("");
 
         });
-        et=(EditText)findViewById(R.id.typeText);
+
+    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+    }
+
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
     }
 }

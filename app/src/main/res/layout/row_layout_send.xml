@@ -12,7 +12,7 @@
         android:layout_gravity="left"
         android:src="@drawable/row_send"/>
     <TextView
-        android:id="@+id/sendText"
+        android:id="@+id/msg"
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
         android:layout_columnWeight="6"
