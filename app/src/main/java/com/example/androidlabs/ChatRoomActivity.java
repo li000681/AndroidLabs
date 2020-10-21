@@ -27,9 +27,11 @@ public class ChatRoomActivity<sendButtonIsClicked> extends AppCompatActivity {
     private class Message{
         private String msg;
         private Boolean sendButtonIsClicked;
-        public Message(String msg, Boolean sendButtonIsClicked){
+        private Long id;
+        public Message(Long id,String msg, Boolean sendButtonIsClicked){
             this.msg=msg;
             this.sendButtonIsClicked=sendButtonIsClicked;
+            this.id=id;
         }
         public boolean getSendButtonIsClicked(){
             return sendButtonIsClicked;
@@ -55,7 +57,7 @@ public class ChatRoomActivity<sendButtonIsClicked> extends AppCompatActivity {
 
         @Override
         public long getItemId(int position) {
-            return (long)position;
+            return (long)id;
         }
         @Override
         public int getViewTypeCount() {
