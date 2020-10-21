@@ -107,7 +107,7 @@ public class ChatRoomActivity<sendButtonIsClicked> extends AppCompatActivity {
 
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setTitle( getResources().getString(R.string.alertTitle))
-                    .setMessage( getResources().getString(R.string.alertMessage1)+ (pos+1) + getResources().getString(R.string.alertMessage2)+ myAdapter.getItemId(pos) )
+                    .setMessage( getResources().getString(R.string.alertMessage1)+ (pos) + getResources().getString(R.string.alertMessage2)+ myAdapter.getItemId(pos) )
                   //  .setView(newView) //add the 3 edit texts showing the contact information
 
                     .setPositiveButton( getResources().getString(R.string.alertPB), (click, b) -> {
