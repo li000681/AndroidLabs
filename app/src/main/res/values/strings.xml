@@ -22,4 +22,6 @@
     <string name="alertMessage2">". The database id: "</string>
     <string name="alertPB">"Delete"</string>
     <string name="alertNB">"Dismiss"</string>
+    <string name="message">"Message"</string>
+    <string name="isSended">"isSended"</string>
 </resources>

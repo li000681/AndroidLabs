@@ -4,12 +4,14 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import static java.lang.Boolean.TRUE;
+
 public class MyOpener extends SQLiteOpenHelper {
 
     protected final static String DATABASE_NAME = "MessagesDB";
     protected final static int VERSION_NUM = 1;
     public final static String TABLE_NAME = "MESSAGES";
-    public final static String COL_ISSENT = "YES";
+    public final static Boolean COL_ISSENT = TRUE;
     public final static String COL_MESSAGES = "MESSAGE";
     public final static String COL_ID = "_id";
 
