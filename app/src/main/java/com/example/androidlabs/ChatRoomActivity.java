@@ -27,22 +27,22 @@ public class ChatRoomActivity<sendButtonIsClicked> extends AppCompatActivity {
     private Button receiveButton;
     private EditText et;
     SQLiteDatabase db;
+
     private void loadDataFromDatabase()
     {
         //get a database connection:
         MyOpener dbOpener = new MyOpener(this);
         db = dbOpener.getWritableDatabase(); //This calls onCreate() if you've never built the table before, or onUpgrade if the version here is newer
 
-
         // We want to get all of the columns. Look at MyOpener.java for the definitions:
-        String [] columns = {MyOpener.COL_ID, MyOpener.COL_MESSAGES, String.valueOf(MyOpener.COL_ISSENT)};
+        String [] columns = {MyOpener.COL_ID, MyOpener.COL_MESSAGES, MyOpener.COL_SENT};
         //query all the results from the database:
         Cursor results = db.query(false, MyOpener.TABLE_NAME, columns, null, null, null, null, null, null);
 
         //Now the results object has rows of results that match the query.
         //find the column indices:
         int emailColumnIndex = results.getColumnIndex(MyOpener.COL_MESSAGES);
-        int nameColIndex = results.getColumnIndex(String.valueOf(MyOpener.COL_ISSENT));
+        int nameColIndex = results.getColumnIndex(MyOpener.COL_SENT);
         int idColIndex = results.getColumnIndex(MyOpener.COL_ID);
 
         //iterate over the results, return true if there is a next item:
@@ -95,7 +95,7 @@ public class ChatRoomActivity<sendButtonIsClicked> extends AppCompatActivity {
         //Create a ContentValues object to represent a database row:
         ContentValues updatedValues = new ContentValues();
         updatedValues.put(MyOpener.COL_MESSAGES, c.getMsg());
-        updatedValues.put(String.valueOf(MyOpener.COL_ISSENT), c.getSendButtonIsClicked());
+        updatedValues.put(String.valueOf(MyOpener.COL_SENT), c.getSendButtonIsClicked());
 
         //now call the update function:
         db.update(MyOpener.TABLE_NAME, updatedValues, MyOpener.COL_ID + "= ?", new String[] {Long.toString(c.getId())});
@@ -172,18 +172,7 @@ public class ChatRoomActivity<sendButtonIsClicked> extends AppCompatActivity {
         chatList.setAdapter(  myAdapter = new MyListAdapter() );
         chatList.setOnItemClickListener( (parent, view, pos, id) -> {
 
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setTitle( getResources().getString(R.string.alertTitle))
-                    .setMessage( getResources().getString(R.string.alertMessage1)+ elements.get(pos).getMsg()+ getResources().getString(R.string.alertMessage2)+ pos )
-                  //  .setView(newView) //add the 3 edit texts showing the contact information
-
-                    .setPositiveButton( getResources().getString(R.string.alertPB), (click, b) -> {
-
-                        elements.remove(pos);
-                        myAdapter.notifyDataSetChanged();
-                    })
-                    .setNegativeButton( getResources().getString(R.string.alertNB), (click, b) -> { })
-                    .create().show();
+            showMessage(pos);
 
         }   );
         sendButton = (Button) findViewById(R.id.sendButton);
@@ -196,7 +185,7 @@ public class ChatRoomActivity<sendButtonIsClicked> extends AppCompatActivity {
             //put string name in the NAME column:
             newRowValues.put(MyOpener.COL_MESSAGES, msg);
             //put string email in the EMAIL column:
-            newRowValues.put(String.valueOf(MyOpener.COL_ISSENT), true);
+            newRowValues.put(String.valueOf(MyOpener.COL_SENT), true);
 
             //Now insert in the database:
             long newId = db.insert(MyOpener.TABLE_NAME, null, newRowValues);
@@ -217,7 +206,7 @@ public class ChatRoomActivity<sendButtonIsClicked> extends AppCompatActivity {
             //put string name in the NAME column:
             newRowValues.put(MyOpener.COL_MESSAGES, msg);
             //put string email in the EMAIL column:
-            newRowValues.put(String.valueOf(MyOpener.COL_ISSENT), true);
+            newRowValues.put(String.valueOf(MyOpener.COL_SENT), true);
 
             //Now insert in the database:
             long newId = db.insert(MyOpener.TABLE_NAME, null, newRowValues);

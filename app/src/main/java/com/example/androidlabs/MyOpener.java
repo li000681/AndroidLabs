@@ -11,7 +11,7 @@ public class MyOpener extends SQLiteOpenHelper {
     protected final static String DATABASE_NAME = "MessagesDB";
     protected final static int VERSION_NUM = 1;
     public final static String TABLE_NAME = "MESSAGES";
-    public final static Boolean COL_ISSENT = TRUE;
+    public final static String COL_SENT = "SENT";
     public final static String COL_MESSAGES = "MESSAGE";
     public final static String COL_ID = "_id";
 
@@ -28,7 +28,7 @@ public class MyOpener extends SQLiteOpenHelper {
     {
         db.execSQL("CREATE TABLE " + TABLE_NAME + " (_id INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + COL_MESSAGES + " text,"
-                + COL_ISSENT  + " text);");  // add or remove columns
+                + COL_SENT+  " integer);");  // add or remove columns
     }
 
 
