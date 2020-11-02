@@ -80,20 +80,20 @@ public class ChatRoomActivity<sendButtonIsClicked> extends AppCompatActivity {
         rowId.setText("id:" + selectedMessage.getId());
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("You clicked on item #" + position)
-                .setMessage("You can update the fields and then click update to save in the database")
+        builder.setTitle("@string/title" + position)
+                .setMessage("@string/alertMessage1")
                 .setView(contact_view) //add the 3 edit texts showing the contact information
-                .setPositiveButton("Update", (click, b) -> {
+                .setPositiveButton("@string/alertUB", (click, b) -> {
                     selectedMessage.update(rowName.getText().toString(), selectedMessage.stringToBoolean(rowEmail.getText().toString()));
                     updateMessage(selectedMessage);
                     myAdapter.notifyDataSetChanged(); //the email and name have changed so rebuild the list
                 })
-                .setNegativeButton("Delete", (click, b) -> {
+                .setNegativeButton("@string/alertPB", (click, b) -> {
                     deleteMessage(selectedMessage); //remove the contact from database
                     elements.remove(position); //remove the contact from contact list
                     myAdapter.notifyDataSetChanged(); //there is one less item so update the list
                 })
-                .setNeutralButton("dismiss", (click, b) -> { })
+                .setNeutralButton("@string/alertNB", (click, b) -> { })
                 .create().show();
     }
     protected void updateMessage(Message c)
@@ -101,7 +101,7 @@ public class ChatRoomActivity<sendButtonIsClicked> extends AppCompatActivity {
         //Create a ContentValues object to represent a database row:
         ContentValues updatedValues = new ContentValues();
         updatedValues.put(MyOpener.COL_MESSAGES, c.getMsg());
-        updatedValues.put(String.valueOf(MyOpener.COL_SENT), c.getSendButtonIsClicked());
+        updatedValues.put(MyOpener.COL_SENT, c.getSendButtonIsClicked());
 
         //now call the update function:
         db.update(MyOpener.TABLE_NAME, updatedValues, MyOpener.COL_ID + "= ?", new String[] {Long.toString(c.getId())});
