@@ -80,20 +80,20 @@ public class ChatRoomActivity<sendButtonIsClicked> extends AppCompatActivity {
         rowId.setText("id:" + selectedMessage.getId());
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("@string/title" + position)
-                .setMessage("@string/alertMessage1")
+        builder.setTitle(getResources().getString(R.string.alertTitle) + position)
+                .setMessage(getResources().getString(R.string.alertMessage1))
                 .setView(contact_view) //add the 3 edit texts showing the contact information
-                .setPositiveButton("@string/alertUB", (click, b) -> {
+                .setPositiveButton(getResources().getString(R.string.alertUB), (click, b) -> {
                     selectedMessage.update(rowName.getText().toString(), selectedMessage.stringToBoolean(rowEmail.getText().toString()));
                     updateMessage(selectedMessage);
                     myAdapter.notifyDataSetChanged(); //the email and name have changed so rebuild the list
                 })
-                .setNegativeButton("@string/alertPB", (click, b) -> {
+                .setNegativeButton(getResources().getString(R.string.alertPB), (click, b) -> {
                     deleteMessage(selectedMessage); //remove the contact from database
                     elements.remove(position); //remove the contact from contact list
                     myAdapter.notifyDataSetChanged(); //there is one less item so update the list
                 })
-                .setNeutralButton("@string/alertNB", (click, b) -> { })
+                .setNeutralButton(getResources().getString(R.string.alertNB), (click, b) -> { })
                 .create().show();
     }
     protected void updateMessage(Message c)

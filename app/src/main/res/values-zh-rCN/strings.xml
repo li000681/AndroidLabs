@@ -17,9 +17,12 @@
     <string name="sendButton">发送</string>
     <string name="receiveButton">接收</string>
     <string name="typeText">在此输入</string>
-    <string name="alertTitle">"你想删除这个?"</string>
-    <string name="alertMessage1">"选中的行为 "</string>
+    <string name="alertTitle">你点击了信息#</string>
+    <string name="alertMessage1">你可以更改这个信息并存入数据库</string>
     <string name="alertMessage2">". 数据标识为: "</string>
     <string name="alertPB">"删除"</string>
     <string name="alertNB">"放弃"</string>
+    <string name="alertUB">更改</string>
+    <string name="isSended">发送</string>
+    <string name="message">信息</string>
 </resources>
