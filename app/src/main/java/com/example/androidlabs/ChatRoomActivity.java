@@ -19,6 +19,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class ChatRoomActivity<sendButtonIsClicked> extends AppCompatActivity {
     private ArrayList<Message> elements = new ArrayList<>();
@@ -26,18 +27,23 @@ public class ChatRoomActivity<sendButtonIsClicked> extends AppCompatActivity {
     private Button sendButton;
     private Button receiveButton;
     private EditText et;
-    SQLiteDatabase db;
+    private SQLiteDatabase db;
+    Cursor results;
+
+
 
     private void loadDataFromDatabase()
     {
         //get a database connection:
         MyOpener dbOpener = new MyOpener(this);
-        db = dbOpener.getWritableDatabase(); //This calls onCreate() if you've never built the table before, or onUpgrade if the version here is newer
+        //This calls onCreate() if you've never built the table before, or onUpgrade if the version here is newer
 
+        db = dbOpener.getWritableDatabase();
         // We want to get all of the columns. Look at MyOpener.java for the definitions:
         String [] columns = {MyOpener.COL_ID, MyOpener.COL_MESSAGES, MyOpener.COL_SENT};
         //query all the results from the database:
-        Cursor results = db.query(false, MyOpener.TABLE_NAME, columns, null, null, null, null, null, null);
+        results = db.query(false, MyOpener.TABLE_NAME, columns, null, null, null, null, null, null);
+
 
         //Now the results object has rows of results that match the query.
         //find the column indices:
@@ -48,10 +54,10 @@ public class ChatRoomActivity<sendButtonIsClicked> extends AppCompatActivity {
         //iterate over the results, return true if there is a next item:
         while(results.moveToNext())
         {
-            String msg = results.getString(nameColIndex);
-            Boolean sendButtonIsClicked = results.getInt(emailColumnIndex)>0;
+            String msg = results.getString(emailColumnIndex);
+            Boolean sendButtonIsClicked = results.getInt(nameColIndex)==1;
             long id = results.getLong(idColIndex);
-
+           // Log.i(String.valueOf(id),msg+sendButtonIsClicked);
             //add the new Contact to the array list:
             elements.add(new Message(id, msg, sendButtonIsClicked));
         }
@@ -106,7 +112,35 @@ public class ChatRoomActivity<sendButtonIsClicked> extends AppCompatActivity {
         db.delete(MyOpener.TABLE_NAME, MyOpener.COL_ID + "= ?", new String[] {Long.toString(c.getId())});
     }
     protected void printCursor( Cursor c, int version){
+//        •	The database version number, use db.getVersion() for the version number.
+//•	The number of columns in the cursor.
+//•	The name of the columns in the cursor.
+//•	The number of rows in the cursor
+//•	Print out each row of results in the cursor.
+//        String [] columns = {MyOpener.COL_ID, MyOpener.COL_MESSAGES, MyOpener.COL_SENT};
+//        //query all the results from the database:
+//        results = db.query(false, MyOpener.TABLE_NAME, columns, null, null, null, null, null, null);
+        String [] columns = {MyOpener.COL_ID, MyOpener.COL_MESSAGES, MyOpener.COL_SENT};
+        //query all the results from the database:
+        c = db.query(false, MyOpener.TABLE_NAME, columns, null, null, null, null, null, null);
 
+        Log.i("version number: " , String.valueOf(db.getVersion()));
+        Log.i("number of columns: " , String.valueOf(c.getColumnCount()));
+        Log.i("name of columns: " , Arrays.toString(c.getColumnNames()));
+        Log.i("number of rows: " , String.valueOf(c.getCount()));
+        int emailColumnIndex = c.getColumnIndex(MyOpener.COL_MESSAGES);
+        int nameColIndex = c.getColumnIndex(MyOpener.COL_SENT);
+        int idColIndex = c.getColumnIndex(MyOpener.COL_ID);
+
+        //iterate over the results, return true if there is a next item:
+        while(c.moveToNext())
+        {
+            String msg = c.getString(emailColumnIndex);
+            Boolean sendButtonIsClicked = c.getInt(nameColIndex)==1;
+            long id = c.getLong(idColIndex);
+            Log.i(String.valueOf(id),msg+" "+sendButtonIsClicked);
+
+        }
     }
     private class MyListAdapter extends BaseAdapter {
         @Override
@@ -185,7 +219,7 @@ public class ChatRoomActivity<sendButtonIsClicked> extends AppCompatActivity {
             //put string name in the NAME column:
             newRowValues.put(MyOpener.COL_MESSAGES, msg);
             //put string email in the EMAIL column:
-            newRowValues.put(String.valueOf(MyOpener.COL_SENT), true);
+            newRowValues.put(MyOpener.COL_SENT, true);
 
             //Now insert in the database:
             long newId = db.insert(MyOpener.TABLE_NAME, null, newRowValues);
@@ -193,6 +227,7 @@ public class ChatRoomActivity<sendButtonIsClicked> extends AppCompatActivity {
             elements.add(message);
             et.setText("");
             myAdapter.notifyDataSetChanged();
+            printCursor(results,db.getVersion());
 
 
         });
@@ -206,13 +241,14 @@ public class ChatRoomActivity<sendButtonIsClicked> extends AppCompatActivity {
             //put string name in the NAME column:
             newRowValues.put(MyOpener.COL_MESSAGES, msg);
             //put string email in the EMAIL column:
-            newRowValues.put(String.valueOf(MyOpener.COL_SENT), true);
+            newRowValues.put(MyOpener.COL_SENT, false);
 
             //Now insert in the database:
             long newId = db.insert(MyOpener.TABLE_NAME, null, newRowValues);
             Message message= new Message(newId, msg,false);
             elements.add(message);
             myAdapter.notifyDataSetChanged();
+            printCursor(results,db.getVersion());
 
             et.setText("");
 
