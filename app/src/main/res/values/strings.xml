@@ -25,4 +25,5 @@
     <string name="alertNB">"Dismiss"</string>
     <string name="message">"Message"</string>
     <string name="isSended">sent</string>
+    <string name="weatherButton">Weather</string>
 </resources>

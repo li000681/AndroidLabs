@@ -25,4 +25,5 @@
     <string name="alertUB">更改</string>
     <string name="isSended">发送</string>
     <string name="message">信息</string>
+    <string name="weatherButton">天气预报</string>
 </resources>

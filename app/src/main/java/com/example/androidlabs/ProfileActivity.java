@@ -16,6 +16,7 @@ public class ProfileActivity extends AppCompatActivity {
     static final int REQUEST_IMAGE_CAPTURE = 1;
     private ImageButton mImageButton;
     private Button chatButton;
+    private Button weatherButton;
     private void dispatchTakePictureIntent() {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
@@ -39,7 +40,10 @@ public class ProfileActivity extends AppCompatActivity {
         Intent chatPage =new Intent( ProfileActivity.this, ChatRoomActivity.class);
 
         chatButton.setOnClickListener(click->startActivity(chatPage));
+        weatherButton=findViewById(R.id.weatherButton);
+        Intent weatherPage =new Intent( ProfileActivity.this, WeatherForecast.class);
 
+        chatButton.setOnClickListener(click->startActivity(weatherPage));
         Log.e(ACTIVITY_NAME, "In function: onCreate");
     }
         @Override
