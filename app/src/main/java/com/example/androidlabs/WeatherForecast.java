@@ -196,7 +196,7 @@ public class WeatherForecast extends AppCompatActivity {
                 //get the double associated with "value"
                 float value = (float) uvReport.getDouble("value");
 
-                Log.i("MainActivity", "The uv is now: " + uvRating) ;
+                uv=Float. toString(value);
 
             }
             catch (Exception e)
