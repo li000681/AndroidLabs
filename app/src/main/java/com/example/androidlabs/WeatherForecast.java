@@ -29,27 +29,36 @@ import java.net.URL;
 import java.net.URLEncoder;
 
 public class WeatherForecast extends AppCompatActivity {
+
+
     private ImageView iv;
     private TextView ct;
     private TextView mint;
     private TextView maxt;
     private TextView uvr;
     private ProgressBar pb;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_weather_forecast);
+
         iv=findViewById(R.id.currentWeather);
         ct=findViewById(R.id.currentTemperature);
         mint=findViewById(R.id.minTemperature);
         maxt=findViewById(R.id.maxTemperature);
         uvr=findViewById(R.id.uvRating);
+
         pb=findViewById(R.id.progressBar);
         pb.setVisibility(View.VISIBLE);
-        String iconName = null;
         ForecastQuery req = new ForecastQuery();
         req.execute("http://api.openweathermap.org/data/2.5/weather?q=ottawa,ca&APPID=7e943c97096a9784391a981c4d878b22&mode=xml&units=metric","http://api.openweathermap.org/data/2.5/uvi?appid=7e943c97096a9784391a981c4d878b22&lat=45.348945&lon=-75.759389");
+
     }
+
+
+
+
 
     private  class ForecastQuery extends AsyncTask<String, Integer, Weather> {
         //string variables for the UV, min, max, and current temperature
@@ -57,16 +66,16 @@ public class WeatherForecast extends AppCompatActivity {
         String min;
         String max;
         String current;
-        Bitmap image = null;
+        Bitmap image;
         Weather w= new Weather();
         @Override
         public Weather doInBackground(String ... args)
         {
             try {
-                String URL = URLEncoder.encode(args[0], "UTF-8");
+              //  String URL = URLEncoder.encode(args[0], "UTF-8");
 
                 //create a URL object of what server to contact:
-                URL url = new URL(URL);
+                URL url = new URL(args[0]);
 
                 //open the connection
                 HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
@@ -99,6 +108,7 @@ public class WeatherForecast extends AppCompatActivity {
                         {
                             //If you get here, then you are pointing to a <Weather> start tag
                             min = xpp.getAttributeValue(null,    "min");
+
                             publishProgress(25);
                             max = xpp.getAttributeValue(null, "max");
 
@@ -110,18 +120,13 @@ public class WeatherForecast extends AppCompatActivity {
                             w.setMax(max);
                             w.setMin(min);
                         }
-
-//                        else if(xpp.getName().equals("AMessage"))
-//                        {
-//                            parameter = xpp.getAttributeValue(null, "message"); // this will run for <AMessage message="parameter" >
-//                        }
-                        else if(xpp.getName().equals("Weather")) {
+                        else if(xpp.getName().equals("weather")) {
 
                             String iconName = xpp.getAttributeValue(null, "icon"); //this will run for <Weather outlook="parameter"
-                            if (fileExistance(iconName)) {
+                            if (fileExistance(iconName+ ".png")) {
                                 FileInputStream fis = null;
                                 try {
-                                    fis = openFileInput(iconName);
+                                    fis = openFileInput(iconName+ ".png");
                                 } catch (FileNotFoundException e) {
                                     e.printStackTrace();
                                 }
@@ -130,42 +135,41 @@ public class WeatherForecast extends AppCompatActivity {
                                 Log.i(iconName, " is from local.");
 
                             } else {
+
                                 String urlString = "http://openweathermap.org/img/w/" + iconName + ".png";
 
-                                    url = new URL(urlString);
-                                    HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-                                    connection.connect();
-                                    int responseCode = connection.getResponseCode();
-                                    if (responseCode == 200) {
-                                        image = BitmapFactory.decodeStream(connection.getInputStream());
-                                        publishProgress(100);
-                                        Log.i(iconName, " is downloaded.");
-                                        FileOutputStream outputStream = openFileOutput(iconName + ".png", Context.MODE_PRIVATE);
-                                        image.compress(Bitmap.CompressFormat.PNG, 80, outputStream);
-                                        outputStream.flush();
-                                        outputStream.close();
-                                        publishProgress(100);
-                                        w.setImage(image);
+                                URL url2 = new URL(urlString);
+                                HttpURLConnection connection2 = (HttpURLConnection) url2.openConnection();
+                                connection2.connect();
+                                int responseCode = connection2.getResponseCode();
+                                if (responseCode == 200) {
+                                    image = BitmapFactory.decodeStream(connection2.getInputStream());
+                                    publishProgress(100);
+                                    Log.i(iconName, " is downloaded.");
 
-                                    }
+
+                                    FileOutputStream outputStream = openFileOutput(iconName + ".png", Context.MODE_PRIVATE);
+                                    image.compress(Bitmap.CompressFormat.PNG, 80, outputStream);
+                                    outputStream.flush();
+                                    outputStream.close();
+
+                                    publishProgress(100);
+                                    w.setImage(image);
+
+                                }
 
 
                             }
                         }
-//                        else if(xpp.getName().equals("Temperature"))
-//                        {
-//                            xpp.next(); //move the pointer from the opening tag to the TEXT event
-//                            parameter = xpp.getText(); // this will return  20
-//                        }
                     }
                     eventType = xpp.next(); //move to the next xml event and store it in a variable
                 }
 
 
 
-                String URL1 = URLEncoder.encode(args[1], "UTF-8");
-                //create a URL object of what server to contact:
-                URL url1 = new URL(URL1);
+            //    String URL1 = URLEncoder.encode(args[1], "UTF-8");
+
+                URL url1 = new URL(args[1]);
 
                 //open the connection
                 HttpURLConnection urlConnection1 = (HttpURLConnection) url1.openConnection();
@@ -200,14 +204,17 @@ public class WeatherForecast extends AppCompatActivity {
             {
                 Log.i(String.valueOf(e),"not connected");
             }
+
             return w;
         }
+
 
         //Type 2
         public void onProgressUpdate(Integer ... value)
         {
             pb.setVisibility(View.VISIBLE);
             pb.setProgress(value[0]);
+
         }
         //Type3
         public void onPostExecute(Weather fromDoInBackground)
@@ -217,10 +224,14 @@ public class WeatherForecast extends AppCompatActivity {
             mint.setText(fromDoInBackground.getMin());
             maxt.setText(fromDoInBackground.getMax());
             uvr.setText(fromDoInBackground.getUv());
+            pb.setVisibility(View.INVISIBLE);
         }
+
         public boolean fileExistance(String fname){
             File file = getBaseContext().getFileStreamPath(fname);
             return file.exists();   }
 
     }
+
+
 }
