@@ -100,15 +100,11 @@ public class WeatherForecast extends AppCompatActivity {
                             //If you get here, then you are pointing to a <Weather> start tag
                             min = xpp.getAttributeValue(null,    "min");
                             publishProgress(25);
-                            publishProgress(50);
-                            publishProgress(75);
                             max = xpp.getAttributeValue(null, "max");
-                            publishProgress(25);
+
                             publishProgress(50);
-                            publishProgress(75);
+
                             current = xpp.getAttributeValue(null, "value");
-                            publishProgress(25);
-                            publishProgress(50);
                             publishProgress(75);
                             w.setCurrent(current);
                             w.setMax(max);
@@ -135,7 +131,7 @@ public class WeatherForecast extends AppCompatActivity {
 
                             } else {
                                 String urlString = "http://openweathermap.org/img/w/" + iconName + ".png";
-                                try {
+
                                     url = new URL(urlString);
                                     HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                                     connection.connect();
@@ -148,13 +144,12 @@ public class WeatherForecast extends AppCompatActivity {
                                         image.compress(Bitmap.CompressFormat.PNG, 80, outputStream);
                                         outputStream.flush();
                                         outputStream.close();
+                                        publishProgress(100);
                                         w.setImage(image);
 
                                     }
 
-                                } catch (Exception e) {
 
-                                }
                             }
                         }
 //                        else if(xpp.getName().equals("Temperature"))
@@ -167,25 +162,20 @@ public class WeatherForecast extends AppCompatActivity {
                 }
 
 
-            }
-            catch (Exception e)
-            {
 
-            }
-            try {
-                String URL = URLEncoder.encode(args[1], "UTF-8");
+                String URL1 = URLEncoder.encode(args[1], "UTF-8");
                 //create a URL object of what server to contact:
-                URL url = new URL(URL);
+                URL url1 = new URL(URL1);
 
                 //open the connection
-                HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+                HttpURLConnection urlConnection1 = (HttpURLConnection) url1.openConnection();
 
                 //wait for data:
-                InputStream response = urlConnection.getInputStream();
+                InputStream response1 = urlConnection1.getInputStream();
 
                 //JSON reading:   Look at slide 26
                 //Build the entire string response:
-                BufferedReader reader = new BufferedReader(new InputStreamReader(response, "UTF-8"), 8);
+                BufferedReader reader = new BufferedReader(new InputStreamReader(response1, "UTF-8"), 8);
                 StringBuilder sb = new StringBuilder();
 
                 String line = null;
