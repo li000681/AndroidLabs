@@ -46,8 +46,9 @@ public class WeatherForecast extends AppCompatActivity {
         uvr=findViewById(R.id.uvRating);
         pb=findViewById(R.id.progressBar);
         pb.setVisibility(View.VISIBLE);
+        String iconName = null;
         ForecastQuery req = new ForecastQuery();
-        req.execute("http://api.openweathermap.org/data/2.5/weather?q=ottawa,ca&APPID=7e943c97096a9784391a981c4d878b22&mode=xml&units=metric");
+        req.execute("http://api.openweathermap.org/data/2.5/weather?q=ottawa,ca&APPID=7e943c97096a9784391a981c4d878b22&mode=xml&units=metric","http://api.openweathermap.org/data/2.5/uvi?appid=7e943c97096a9784391a981c4d878b22&lat=45.348945&lon=-75.759389");
     }
 
     private  class ForecastQuery extends AsyncTask<String, Integer, Weather> {
@@ -172,7 +173,7 @@ public class WeatherForecast extends AppCompatActivity {
 
             }
             try {
-                String URL = URLEncoder.encode("http://api.openweathermap.org/data/2.5/uvi?appid=7e943c97096a9784391a981c4d878b22&lat=45.348945&lon=-75.759389", "UTF-8");
+                String URL = URLEncoder.encode(args[1], "UTF-8");
                 //create a URL object of what server to contact:
                 URL url = new URL(URL);
 
