@@ -50,7 +50,7 @@ public class WeatherForecast extends AppCompatActivity {
         req.execute("http://api.openweathermap.org/data/2.5/weather?q=ottawa,ca&APPID=7e943c97096a9784391a981c4d878b22&mode=xml&units=metric");
     }
 
-    private  class ForecastQuery extends AsyncTask<String, Integer, String> {
+    private  class ForecastQuery extends AsyncTask<String, Integer, Weather> {
         //string variables for the UV, min, max, and current temperature
         String uv;
         String min;
@@ -59,7 +59,7 @@ public class WeatherForecast extends AppCompatActivity {
         Bitmap image = null;
 
         @Override
-        public String doInBackground(String ... args)
+        public Weather doInBackground(String ... args)
         {
             try {
                 String URL = URLEncoder.encode(args[0], "UTF-8");
@@ -84,7 +84,7 @@ public class WeatherForecast extends AppCompatActivity {
 
 
                 //From part 3, slide 20
-                String parameter = null;
+                //String parameter = null;
 
                 int eventType = xpp.getEventType(); //The parser is currently at START_DOCUMENT
 
@@ -201,9 +201,9 @@ public class WeatherForecast extends AppCompatActivity {
             }
             catch (Exception e)
             {
-
+                Log.i(String.valueOf(e),"not connected");
             }
-            return "Done";
+            return new Weather(uv,min,max,current,image);
         }
 
         //Type 2
@@ -213,13 +213,13 @@ public class WeatherForecast extends AppCompatActivity {
             pb.setProgress(value[0]);
         }
         //Type3
-        public void onPostExecute(String fromDoInBackground)
+        public void onPostExecute(Weather fromDoInBackground)
         {
-            iv.setImageBitmap(image);
-            ct.setText(current);
-            mint.setText(min);
-            maxt.setText(max);
-            uvr.setText(uv);
+            iv.setImageBitmap(fromDoInBackground.getImage());
+            ct.setText(fromDoInBackground.getCurrent());
+            mint.setText(fromDoInBackground.getMin());
+            maxt.setText(fromDoInBackground.getMax());
+            uvr.setText(fromDoInBackground.getUv());
         }
         public boolean fileExistance(String fname){
             File file = getBaseContext().getFileStreamPath(fname);

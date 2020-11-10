@@ -43,7 +43,7 @@ public class ProfileActivity extends AppCompatActivity {
         weatherButton=findViewById(R.id.weatherButton);
         Intent weatherPage =new Intent( ProfileActivity.this, WeatherForecast.class);
 
-        chatButton.setOnClickListener(click->startActivity(weatherPage));
+        weatherButton.setOnClickListener(click->startActivity(weatherPage));
         Log.e(ACTIVITY_NAME, "In function: onCreate");
     }
         @Override
