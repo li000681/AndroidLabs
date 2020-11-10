@@ -72,7 +72,7 @@ public class WeatherForecast extends AppCompatActivity {
         public Weather doInBackground(String ... args)
         {
             try {
-              //  String URL = URLEncoder.encode(args[0], "UTF-8");
+               // String a = URLEncoder.encode(args[0], "UTF-8");
 
                 //create a URL object of what server to contact:
                 URL url = new URL(args[0]);
