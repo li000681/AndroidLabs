@@ -57,7 +57,7 @@ public class WeatherForecast extends AppCompatActivity {
         String max;
         String current;
         Bitmap image = null;
-
+        Weather w= new Weather(uv,min,max,current,image);
         @Override
         public Weather doInBackground(String ... args)
         {
@@ -109,6 +109,9 @@ public class WeatherForecast extends AppCompatActivity {
                             publishProgress(25);
                             publishProgress(50);
                             publishProgress(75);
+                            w.setCurrent(current);
+                            w.setMax(max);
+                            w.setMin(min);
                         }
 
 //                        else if(xpp.getName().equals("AMessage"))
@@ -126,6 +129,7 @@ public class WeatherForecast extends AppCompatActivity {
                                     e.printStackTrace();
                                 }
                                 image = BitmapFactory.decodeStream(fis);
+                                w.setImage(image);
                                 Log.i(iconName, " is from local.");
 
                             } else {
@@ -143,6 +147,7 @@ public class WeatherForecast extends AppCompatActivity {
                                         image.compress(Bitmap.CompressFormat.PNG, 80, outputStream);
                                         outputStream.flush();
                                         outputStream.close();
+                                        w.setImage(image);
 
                                     }
 
@@ -197,13 +202,14 @@ public class WeatherForecast extends AppCompatActivity {
                 float value = (float) uvReport.getDouble("value");
 
                 uv=Float. toString(value);
+                w.setUv(uv);
 
             }
             catch (Exception e)
             {
                 Log.i(String.valueOf(e),"not connected");
             }
-            return new Weather(uv,min,max,current,image);
+            return w;
         }
 
         //Type 2
