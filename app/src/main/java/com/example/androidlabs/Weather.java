@@ -15,6 +15,9 @@ public class Weather {
         this.current=current;
         this.image=image;
     }
+    public Weather(){
+        this(null,null,null,null,null);
+    }
     public void setUv(String s)
     {
         uv=s;

@@ -57,7 +57,7 @@ public class WeatherForecast extends AppCompatActivity {
         String max;
         String current;
         Bitmap image = null;
-        Weather w= new Weather(uv,min,max,current,image);
+        Weather w= new Weather();
         @Override
         public Weather doInBackground(String ... args)
         {
