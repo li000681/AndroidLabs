@@ -52,7 +52,7 @@ public class WeatherForecast extends AppCompatActivity {
         pb=findViewById(R.id.progressBar);
         pb.setVisibility(View.VISIBLE);
         ForecastQuery req = new ForecastQuery();
-        req.execute("http://api.openweathermap.org/data/2.5/weather?q=ottawa,ca&APPID=7e943c97096a9784391a981c4d878b22&mode=xml&units=metric","http://api.openweathermap.org/data/2.5/uvi?appid=7e943c97096a9784391a981c4d878b22&lat=45.348945&lon=-75.759389");
+        req.execute("http://api.openweathermap.org/data/2.5/","weather?q=ottawa,ca&APPID=7e943c97096a9784391a981c4d878b22&mode=xml&units=metric","http://api.openweathermap.org/data/2.5/", "uvi?appid=7e943c97096a9784391a981c4d878b22&lat=45.348945&lon=-75.759389");
 
     }
 
@@ -72,10 +72,10 @@ public class WeatherForecast extends AppCompatActivity {
         public Weather doInBackground(String ... args)
         {
             try {
-               // String a = URLEncoder.encode(args[0], "UTF-8");
+                //String a =args[0]+ URLEncoder.encode(args[1], "UTF-8");
 
                 //create a URL object of what server to contact:
-                URL url = new URL(args[0]);
+                URL url = new URL(args[0]+args[1]);
 
                 //open the connection
                 HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
@@ -167,9 +167,9 @@ public class WeatherForecast extends AppCompatActivity {
 
 
 
-            //    String URL1 = URLEncoder.encode(args[1], "UTF-8");
+                //String URL1 = URLEncoder.encode(args[3], "UTF-8");
 
-                URL url1 = new URL(args[1]);
+                URL url1 = new URL(args[2]+ args[3]);
 
                 //open the connection
                 HttpURLConnection urlConnection1 = (HttpURLConnection) url1.openConnection();
@@ -220,10 +220,10 @@ public class WeatherForecast extends AppCompatActivity {
         public void onPostExecute(Weather fromDoInBackground)
         {
             iv.setImageBitmap(fromDoInBackground.getImage());
-            ct.setText(fromDoInBackground.getCurrent());
-            mint.setText(fromDoInBackground.getMin());
-            maxt.setText(fromDoInBackground.getMax());
-            uvr.setText(fromDoInBackground.getUv());
+            ct.setText("Current temperature: "+fromDoInBackground.getCurrent());
+            mint.setText("Min temperature: "+fromDoInBackground.getMin());
+            maxt.setText("Max temperature: "+fromDoInBackground.getMax());
+            uvr.setText("UV Rate: "+fromDoInBackground.getUv());
             pb.setVisibility(View.INVISIBLE);
         }
 
