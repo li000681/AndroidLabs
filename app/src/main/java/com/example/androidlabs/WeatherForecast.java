@@ -22,6 +22,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
@@ -135,15 +136,17 @@ public class WeatherForecast extends AppCompatActivity {
                                 Log.i(iconName, " is from local.");
 
                             } else {
+                                try {
+
 
                                 String urlString = "http://openweathermap.org/img/w/" + iconName + ".png";
 
-                                URL url2 = new URL(urlString);
-                                HttpURLConnection connection2 = (HttpURLConnection) url2.openConnection();
-                                connection2.connect();
-                                int responseCode = connection2.getResponseCode();
+                                url = new URL(urlString);
+                                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                                connection.connect();
+                                int responseCode = connection.getResponseCode();
                                 if (responseCode == 200) {
-                                    image = BitmapFactory.decodeStream(connection2.getInputStream());
+                                    image = BitmapFactory.decodeStream(connection.getInputStream());
                                     publishProgress(100);
                                     Log.i(iconName, " is downloaded.");
 
@@ -158,7 +161,9 @@ public class WeatherForecast extends AppCompatActivity {
 
                                 }
 
-
+                                } catch (FileNotFoundException e) {
+                                    e.printStackTrace();
+                                }
                             }
                         }
                     }
@@ -168,37 +173,40 @@ public class WeatherForecast extends AppCompatActivity {
 
 
                 //String URL1 = URLEncoder.encode(args[3], "UTF-8");
+                try {
 
-                URL url1 = new URL(args[2]+ args[3]);
 
-                //open the connection
-                HttpURLConnection urlConnection1 = (HttpURLConnection) url1.openConnection();
+                    url = new URL(args[2] + args[3]);
 
-                //wait for data:
-                InputStream response1 = urlConnection1.getInputStream();
+                    //open the connection
+                    urlConnection = (HttpURLConnection) url.openConnection();
 
-                //JSON reading:   Look at slide 26
-                //Build the entire string response:
-                BufferedReader reader = new BufferedReader(new InputStreamReader(response1, "UTF-8"), 8);
-                StringBuilder sb = new StringBuilder();
+                    //wait for data:
+                    response = urlConnection.getInputStream();
 
-                String line = null;
-                while ((line = reader.readLine()) != null)
-                {
-                    sb.append(line + "\n");
+                    //JSON reading:   Look at slide 26
+                    //Build the entire string response:
+                    BufferedReader reader = new BufferedReader(new InputStreamReader(response, "UTF-8"), 8);
+                    StringBuilder sb = new StringBuilder();
+
+                    String line = null;
+                    while ((line = reader.readLine()) != null) {
+                        sb.append(line + "\n");
+                    }
+                    String result = sb.toString(); //result is the whole string
+
+
+                    // convert string to JSON: Look at slide 27:
+                    JSONObject uvReport = new JSONObject(result);
+
+                    //get the double associated with "value"
+                    float value = (float) uvReport.getDouble("value");
+
+                    uv = Float.toString(value);
+                    w.setUv(uv);
+                }catch (FileNotFoundException e) {
+                    e.printStackTrace();
                 }
-                String result = sb.toString(); //result is the whole string
-
-
-                // convert string to JSON: Look at slide 27:
-                JSONObject uvReport = new JSONObject(result);
-
-                //get the double associated with "value"
-                float value = (float) uvReport.getDouble("value");
-
-                uv=Float. toString(value);
-                w.setUv(uv);
-
             }
             catch (Exception e)
             {
