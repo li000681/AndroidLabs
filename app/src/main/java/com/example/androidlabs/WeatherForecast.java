@@ -53,7 +53,7 @@ public class WeatherForecast extends AppCompatActivity {
         pb=findViewById(R.id.progressBar);
         pb.setVisibility(View.VISIBLE);
         ForecastQuery req = new ForecastQuery();
-        req.execute("http://api.openweathermap.org/data/2.5/","weather?q=ottawa,ca&APPID=7e943c97096a9784391a981c4d878b22&mode=xml&units=metric","http://api.openweathermap.org/data/2.5/", "uvi?appid=7e943c97096a9784391a981c4d878b22&lat=45.348945&lon=-75.759389");
+        req.execute("http://api.openweathermap.org/data/2.5/weather?q=ottawa,ca&APPID=7e943c97096a9784391a981c4d878b22&mode=xml&units=metric","http://api.openweathermap.org/data/2.5/uvi?appid=7e943c97096a9784391a981c4d878b22&lat=45.348945&lon=-75.759389");
 
     }
 
@@ -61,22 +61,22 @@ public class WeatherForecast extends AppCompatActivity {
 
 
 
-    private  class ForecastQuery extends AsyncTask<String, Integer, Weather> {
+    private  class ForecastQuery extends AsyncTask<String, Integer, String> {
         //string variables for the UV, min, max, and current temperature
         String uv;
         String min;
         String max;
         String current;
         Bitmap image;
-        Weather w= new Weather();
+
         @Override
-        public Weather doInBackground(String ... args)
+        public String doInBackground(String ... args)
         {
             try {
                 //String a =args[0]+ URLEncoder.encode(args[1], "UTF-8");
 
                 //create a URL object of what server to contact:
-                URL url = new URL(args[0]+args[1]);
+                URL url = new URL(args[0]);
 
                 //open the connection
                 HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
@@ -117,9 +117,7 @@ public class WeatherForecast extends AppCompatActivity {
 
                             current = xpp.getAttributeValue(null, "value");
                             publishProgress(75);
-                            w.setCurrent(current);
-                            w.setMax(max);
-                            w.setMin(min);
+
                         }
                         else if(xpp.getName().equals("weather")) {
 
@@ -132,8 +130,8 @@ public class WeatherForecast extends AppCompatActivity {
                                     e.printStackTrace();
                                 }
                                 image = BitmapFactory.decodeStream(fis);
-                                w.setImage(image);
-                                Log.i(iconName, " is from local.");
+
+                                Log.i("images("+iconName+")", " is from local.");
 
                             } else {
                                 try {
@@ -147,7 +145,6 @@ public class WeatherForecast extends AppCompatActivity {
                                 int responseCode = connection.getResponseCode();
                                 if (responseCode == 200) {
                                     image = BitmapFactory.decodeStream(connection.getInputStream());
-                                    publishProgress(100);
                                     Log.i(iconName, " is downloaded.");
 
 
@@ -156,8 +153,8 @@ public class WeatherForecast extends AppCompatActivity {
                                     outputStream.flush();
                                     outputStream.close();
 
-                                    publishProgress(100);
-                                    w.setImage(image);
+
+
 
                                 }
 
@@ -165,6 +162,7 @@ public class WeatherForecast extends AppCompatActivity {
                                     e.printStackTrace();
                                 }
                             }
+                            publishProgress(100);
                         }
                     }
                     eventType = xpp.next(); //move to the next xml event and store it in a variable
@@ -176,7 +174,7 @@ public class WeatherForecast extends AppCompatActivity {
                 try {
 
 
-                    url = new URL(args[2] + args[3]);
+                    url = new URL(args[1]);
 
                     //open the connection
                     urlConnection = (HttpURLConnection) url.openConnection();
@@ -203,7 +201,7 @@ public class WeatherForecast extends AppCompatActivity {
                     float value = (float) uvReport.getDouble("value");
 
                     uv = Float.toString(value);
-                    w.setUv(uv);
+
                 }catch (FileNotFoundException e) {
                     e.printStackTrace();
                 }
@@ -213,7 +211,7 @@ public class WeatherForecast extends AppCompatActivity {
                 Log.i(String.valueOf(e),"not connected");
             }
 
-            return w;
+            return "done";
         }
 
 
@@ -225,13 +223,13 @@ public class WeatherForecast extends AppCompatActivity {
 
         }
         //Type3
-        public void onPostExecute(Weather fromDoInBackground)
+        public void onPostExecute(String fromDoInBackground)
         {
-            iv.setImageBitmap(fromDoInBackground.getImage());
-            ct.setText("Current temperature: "+fromDoInBackground.getCurrent());
-            mint.setText("Min temperature: "+fromDoInBackground.getMin());
-            maxt.setText("Max temperature: "+fromDoInBackground.getMax());
-            uvr.setText("UV Rate: "+fromDoInBackground.getUv());
+            iv.setImageBitmap(image);
+            ct.setText("Current temperature: " +current);
+            mint.setText("Min temperature: "+min);
+            maxt.setText("Max temperature: "+max);
+            uvr.setText("UV Rate: "+uv);
             pb.setVisibility(View.INVISIBLE);
         }
 
