@@ -209,6 +209,9 @@ public class ChatRoomActivity<sendButtonIsClicked> extends AppCompatActivity {
         ListView chatList = (ListView) findViewById(R.id.chatList);
 
         chatList.setAdapter(  myAdapter = new MyListAdapter() );
+        chatList.setOnItemLongClickListener((list, item, position, id) -> {
+            showMessage(position);
+                });
         chatList.setOnItemClickListener((list, item, position, id) -> {
             //Create a bundle to pass data to the new fragment
             Bundle dataToPass = new Bundle();
@@ -219,7 +222,7 @@ public class ChatRoomActivity<sendButtonIsClicked> extends AppCompatActivity {
 
             if(isTablet)
             {
-                DetailFragment dFragment = new DetailFragment(); //add a DetailFragment
+                DetailsFragment dFragment = new DetailsFragment(); //add a DetailFragment
                 dFragment.setArguments( dataToPass ); //pass it a bundle for information
                 getSupportFragmentManager()
                         .beginTransaction()
@@ -228,7 +231,7 @@ public class ChatRoomActivity<sendButtonIsClicked> extends AppCompatActivity {
             }
             else //isPhone
             {
-                Intent nextActivity = new Intent(FragmentExample.this, EmptyActivity.class);
+                Intent nextActivity = new Intent(ChatRoomActivity.this, EmptyActivity.class);
                 nextActivity.putExtras(dataToPass); //send data to next activity
                 startActivity(nextActivity); //make the transition
             }
