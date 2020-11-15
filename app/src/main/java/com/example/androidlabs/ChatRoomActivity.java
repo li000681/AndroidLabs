@@ -33,6 +33,8 @@ public class ChatRoomActivity<sendButtonIsClicked> extends AppCompatActivity {
     private EditText et;
     private SQLiteDatabase db;
     Cursor results;
+    boolean isTablet;
+    DetailsFragment dFragment = new DetailsFragment();
 
 
 
@@ -94,7 +96,9 @@ public class ChatRoomActivity<sendButtonIsClicked> extends AppCompatActivity {
                 })
                 .setNegativeButton(getResources().getString(R.string.alertPB), (click, b) -> {
                     deleteMessage(selectedMessage); //remove the contact from database
-                    elements.remove(position); //remove the contact from contact list
+                    elements.remove(position);
+                    if(isTablet){
+                    getSupportFragmentManager().beginTransaction().remove(dFragment).commit();}//remove the contact from contact list
                     myAdapter.notifyDataSetChanged(); //there is one less item so update the list
                 })
                 .setNeutralButton(getResources().getString(R.string.alertNB), (click, b) -> { })
@@ -203,15 +207,18 @@ public class ChatRoomActivity<sendButtonIsClicked> extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat_room);
-        boolean isTablet = findViewById(R.id.fragmentLocation) != null;
+        isTablet= findViewById(R.id.fragmentLocation) != null;
         et=(EditText)findViewById(R.id.typeText);
         loadDataFromDatabase(); //get any previously saved Contact objects
         ListView chatList = (ListView) findViewById(R.id.chatList);
 
         chatList.setAdapter(  myAdapter = new MyListAdapter() );
-        chatList.setOnItemLongClickListener((list, item, position, id) -> {
-            showMessage(position);
-                });
+        chatList.setOnItemLongClickListener( (parent, view, pos, id) -> {
+
+            showMessage(pos);
+
+            return true;
+        }   );
         chatList.setOnItemClickListener((list, item, position, id) -> {
             //Create a bundle to pass data to the new fragment
             Bundle dataToPass = new Bundle();
@@ -222,7 +229,7 @@ public class ChatRoomActivity<sendButtonIsClicked> extends AppCompatActivity {
 
             if(isTablet)
             {
-                DetailsFragment dFragment = new DetailsFragment(); //add a DetailFragment
+                 //add a DetailFragment
                 dFragment.setArguments( dataToPass ); //pass it a bundle for information
                 getSupportFragmentManager()
                         .beginTransaction()

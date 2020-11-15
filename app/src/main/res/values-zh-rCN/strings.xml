@@ -26,4 +26,5 @@
     <string name="isSended">发送</string>
     <string name="message">信息</string>
     <string name="weatherButton">天气预报</string>
+    <string name="hide">隐藏</string>
 </resources>
