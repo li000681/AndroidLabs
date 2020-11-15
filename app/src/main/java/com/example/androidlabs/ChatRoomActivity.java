@@ -199,6 +199,7 @@ public class ChatRoomActivity<sendButtonIsClicked> extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat_room);
+        boolean isTablet = findViewById(R.id.fragmentLocation) != null;
         et=(EditText)findViewById(R.id.typeText);
         loadDataFromDatabase(); //get any previously saved Contact objects
         ListView chatList = (ListView) findViewById(R.id.chatList);
