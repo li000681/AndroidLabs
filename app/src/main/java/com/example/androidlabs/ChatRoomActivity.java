@@ -4,6 +4,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.ContentValues;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -22,6 +23,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class ChatRoomActivity<sendButtonIsClicked> extends AppCompatActivity {
+    public static final String ITEM_SELECTED = "ITEM";
+    public static final String ITEM_ISSENT = "ISDENT";
+    public static final String ITEM_ID = "ID";
     private ArrayList<Message> elements = new ArrayList<>();
     private MyListAdapter myAdapter;
     private Button sendButton;
@@ -205,11 +209,30 @@ public class ChatRoomActivity<sendButtonIsClicked> extends AppCompatActivity {
         ListView chatList = (ListView) findViewById(R.id.chatList);
 
         chatList.setAdapter(  myAdapter = new MyListAdapter() );
-        chatList.setOnItemClickListener( (parent, view, pos, id) -> {
+        chatList.setOnItemClickListener((list, item, position, id) -> {
+            //Create a bundle to pass data to the new fragment
+            Bundle dataToPass = new Bundle();
+            dataToPass.putString(ITEM_SELECTED, elements.get(position).getMsg() );
 
-            showMessage(pos);
+            dataToPass.putLong(ITEM_ID, id);
+            dataToPass.putBoolean(ITEM_ISSENT, elements.get(position).getSendButtonIsClicked());
 
-        }   );
+            if(isTablet)
+            {
+                DetailFragment dFragment = new DetailFragment(); //add a DetailFragment
+                dFragment.setArguments( dataToPass ); //pass it a bundle for information
+                getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.fragmentLocation, dFragment) //Add the fragment in FrameLayout
+                        .commit(); //actually load the fragment. Calls onCreate() in DetailFragment
+            }
+            else //isPhone
+            {
+                Intent nextActivity = new Intent(FragmentExample.this, EmptyActivity.class);
+                nextActivity.putExtras(dataToPass); //send data to next activity
+                startActivity(nextActivity); //make the transition
+            }
+        });
         sendButton = (Button) findViewById(R.id.sendButton);
         sendButton.setOnClickListener(click->{
             String msg = et.getText().toString();

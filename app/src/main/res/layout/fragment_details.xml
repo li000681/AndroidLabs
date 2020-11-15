@@ -16,6 +16,13 @@
         android:layout_height="wrap_content"
         android:id="@+id/idText"
         android:layout_below="@id/message"/>
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/CheckBox"
+        android:layout_below="@+id/idText"
+        android:text="@string/isSended"/>
+
 
 
     <Button
