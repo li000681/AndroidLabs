@@ -34,7 +34,8 @@ public class ChatRoomActivity<sendButtonIsClicked> extends AppCompatActivity {
     private SQLiteDatabase db;
     Cursor results;
     boolean isTablet;
-    DetailsFragment dFragment = new DetailsFragment();
+    DetailsFragment dFragment;
+
 
 
 
@@ -230,6 +231,7 @@ public class ChatRoomActivity<sendButtonIsClicked> extends AppCompatActivity {
             if(isTablet)
             {
                  //add a DetailFragment
+                DetailsFragment dFragment = new DetailsFragment();
                 dFragment.setArguments( dataToPass ); //pass it a bundle for information
                 getSupportFragmentManager()
                         .beginTransaction()
