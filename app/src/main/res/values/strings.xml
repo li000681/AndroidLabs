@@ -27,6 +27,7 @@
     <string name="isSended">is a Sent Message</string>
     <string name="weatherButton">Weather</string>
     <string name="hide">hide</string>
+    <string name="toolBarButton" >tool bar</>
 
 
 </resources>

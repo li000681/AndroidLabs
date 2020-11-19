@@ -17,6 +17,7 @@ public class ProfileActivity extends AppCompatActivity {
     private ImageButton mImageButton;
     private Button chatButton;
     private Button weatherButton;
+    private Button toolBarButton;
     private void dispatchTakePictureIntent() {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
@@ -41,9 +42,12 @@ public class ProfileActivity extends AppCompatActivity {
 
         chatButton.setOnClickListener(click->startActivity(chatPage));
         weatherButton=findViewById(R.id.weatherButton);
+        toolBarButton=findViewById(R.id.toolBarButton);
         Intent weatherPage =new Intent( ProfileActivity.this, WeatherForecast.class);
 
         weatherButton.setOnClickListener(click->startActivity(weatherPage));
+        Intent TestToolbar =new Intent( ProfileActivity.this, TestToolbar.class);
+        toolBarButton.setOnClickListener(click->startActivityForResult(TestToolbar,));
         Log.e(ACTIVITY_NAME, "In function: onCreate");
     }
         @Override

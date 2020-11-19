@@ -27,4 +27,5 @@
     <string name="message">信息</string>
     <string name="weatherButton">天气预报</string>
     <string name="hide">隐藏</string>
+    <string name="toolBarButton" >工具栏</string>
 </resources>
