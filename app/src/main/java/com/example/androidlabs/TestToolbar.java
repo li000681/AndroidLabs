@@ -55,17 +55,17 @@ public class TestToolbar extends AppCompatActivity {
         switch(item.getItemId())
         {
             //what to do when the menu item is selected:
-            case R.id.item1:
-                message = "You clicked item 1";
+            case R.id.favorate_item:
+                message = "You clicked favorate item";
                 break;
             case R.id.search_item:
-                message = "You clicked on the search";
+                message = "You clicked on the search item";
                 break;
-            case R.id.help_item:
-                message = "You clicked on help";
+            case R.id.delete_item:
+                message = "You clicked on the overflow menu";
                 break;
-            case R.id.mail:
-                message = "You clicked on mail";
+            case R.id.mail_item:
+                message = "You clicked on mail item";
                 break;
         }
         Toast.makeText(this, message, Toast.LENGTH_LONG).show();
