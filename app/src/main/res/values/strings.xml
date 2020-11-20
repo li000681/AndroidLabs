@@ -28,6 +28,9 @@
     <string name="weatherButton">Weather</string>
     <string name="hide">hide</string>
     <string name="toolBarButton" >tool bar</>
+    <string name="favorate">favorate</string>
+    <string name="search">search</string>
+    <string name="delete">delete</string>
 
 
 </resources>
