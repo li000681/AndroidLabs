@@ -27,10 +27,15 @@
     <string name="isSended">is a Sent Message</string>
     <string name="weatherButton">Weather</string>
     <string name="hide">hide</string>
-    <string name="toolBarButton" >tool bar</>
-    <string name="favorate">favorate</string>
+    <string name="toolBarButton" >tool bar</string>
+    <string name="favorite">favorite</string>
     <string name="search">search</string>
     <string name="delete">delete</string>
+    <string name="open">open</string>
+    <string name="close">close</string>
+    <string name="login">Go back to login</string>
+    <string name="weatherForecast">Weather Forecast</string>
+    <string name="chatPage">Chat Page</string>
 
 
 </resources>

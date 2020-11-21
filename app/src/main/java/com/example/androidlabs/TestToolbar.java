@@ -1,15 +1,21 @@
 package com.example.androidlabs;
 
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-public class TestToolbar extends AppCompatActivity {
+import com.google.android.material.navigation.NavigationView;
+
+public class TestToolbar extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -20,6 +26,16 @@ public class TestToolbar extends AppCompatActivity {
 
         //This loads the toolbar, which calls onCreateOptionsMenu below:
         setSupportActionBar(tBar);
+        //For NavigationDrawer:
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this,
+                drawer, tBar, R.string.open, R.string.close);
+        drawer.addDrawerListener(toggle);
+        toggle.syncState();
+
+        NavigationView navigationView = findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
+        setResult(500);
 
     }
 
@@ -55,8 +71,8 @@ public class TestToolbar extends AppCompatActivity {
         switch(item.getItemId())
         {
             //what to do when the menu item is selected:
-            case R.id.favorate_item:
-                message = "You clicked favorate item";
+            case R.id.favorite_item:
+                message = "You clicked favorite item";
                 break;
             case R.id.search_item:
                 message = "You clicked on the search item";
@@ -71,5 +87,34 @@ public class TestToolbar extends AppCompatActivity {
         Toast.makeText(this, message, Toast.LENGTH_LONG).show();
         return true;
     }
+    @Override
+    public boolean onNavigationItemSelected( MenuItem item) {
 
+        String message = null;
+
+        switch(item.getItemId())
+        {
+//            case R.id.favorite_item:
+//                message = "You clicked item 1";
+//                break;
+            case R.id.chatPage:
+                Intent chatPage =new Intent( this, ChatRoomActivity.class);
+                startActivity(chatPage);
+                break;
+            case R.id.weatherForecast:
+                Intent weatherPage =new Intent( this, WeatherForecast.class);
+                startActivity(weatherPage);
+
+                break;
+            case R.id.login:
+                finish();
+                break;
+        }
+
+        DrawerLayout drawerLayout = findViewById(R.id.drawer_layout);
+        drawerLayout.closeDrawer(GravityCompat.START);
+
+        Toast.makeText(this, "NavigationDrawer: " + message, Toast.LENGTH_LONG).show();
+        return false;
+    }
 }

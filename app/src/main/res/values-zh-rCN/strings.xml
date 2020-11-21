@@ -28,7 +28,12 @@
     <string name="weatherButton">天气预报</string>
     <string name="hide">隐藏</string>
     <string name="toolBarButton" >工具栏</string>
-    <string name="favorate">收藏</string>
     <string name="search">查找</string>
     <string name="delete">删除</string>
+    <string name="open">open</string>
+    <string name="close">close</string>
+    <string name="favorite">收藏</string>
+    <string name="login">Go back to login</string>
+    <string name="weatherForecast">Weather Forecast</string>
+    <string name="chatPage">Chat Page</string>
 </resources>

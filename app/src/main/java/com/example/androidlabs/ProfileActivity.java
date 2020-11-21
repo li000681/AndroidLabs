@@ -47,7 +47,7 @@ public class ProfileActivity extends AppCompatActivity {
 
         weatherButton.setOnClickListener(click->startActivity(weatherPage));
         Intent TestToolbar =new Intent( ProfileActivity.this, TestToolbar.class);
-        toolBarButton.setOnClickListener(click->startActivityForResult(TestToolbar,));
+        toolBarButton.setOnClickListener(click->startActivityForResult(TestToolbar,100));
         Log.e(ACTIVITY_NAME, "In function: onCreate");
     }
         @Override
@@ -58,6 +58,8 @@ public class ProfileActivity extends AppCompatActivity {
                 Bitmap imageBitmap = (Bitmap) extras.get("data");
                 mImageButton.setImageBitmap(imageBitmap);
                 Log.e(ACTIVITY_NAME, "In function: onActivityResult" );
+            }else if (requestCode == 100 && resultCode == 500) {
+                finish();
             }
         }
 
